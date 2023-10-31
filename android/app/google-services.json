@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "864031344005",
+    "project_id": "dhe-firebase",
+    "storage_bucket": "dhe-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864031344005:android:56e680ac189785a9a1b0ec",
+        "android_client_info": {
+          "package_name": "com.example.lat_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7stfTCULSQ2Hy7q1tKDEI4fvuwkW5Uvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
