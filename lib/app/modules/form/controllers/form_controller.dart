@@ -4,6 +4,8 @@ class FormController extends GetxController {
   //TODO: Implement FormController
 
   final count = 0.obs;
+
+  get imagePath => null;
   @override
   void onInit() {
     super.onInit();
@@ -20,4 +22,6 @@ class FormController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  selectImage() {}
 }
