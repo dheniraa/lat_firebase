@@ -12,6 +12,8 @@ class LoginView extends GetView<LoginController> {
   final birthDateC = TextEditingController();
   RxString genderValue = ''.obs;
 
+  final GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,267 +40,298 @@ class LoginView extends GetView<LoginController> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (authC.isRegis)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                  color: Colors.purple,
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: emailC,
-                                    decoration: InputDecoration(
-                                      labelText: "Name",
-                                      labelStyle:
-                                          TextStyle(color: Colors.purple),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.purple),
+                    child: Obx(
+                      () => Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (authC.isRegis)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.person,
+                                      color: Colors.purple,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: authC.nameC,
+                                        decoration: InputDecoration(
+                                          labelText: "Name",
+                                          labelStyle:
+                                              TextStyle(color: Colors.purple),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purple),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purple),
+                                          ),
+                                        ),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.purple),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.email,
+                                    color: Colors.purple,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: authC.emailC,
+                                      decoration: InputDecoration(
+                                        labelText: "Email",
+                                        labelStyle:
+                                            TextStyle(color: Colors.purple),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.purple),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.purple),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.email,
-                                color: Colors.purple,
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: emailC,
-                                  decoration: InputDecoration(
-                                    labelText: "Email",
-                                    labelStyle: TextStyle(color: Colors.purple),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.purple),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.purple),
-                                    ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.lock,
+                                    color: Colors.purple,
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.lock,
-                                color: Colors.purple,
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: passC,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    labelText: "Password",
-                                    labelStyle: TextStyle(color: Colors.purple),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.purple),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.purple),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (authC.isRegis)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.lock,
-                                  color: Colors.purple,
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: passC,
-                                    obscureText: true,
-                                    decoration: InputDecoration(
-                                      labelText: "Confirm Password",
-                                      labelStyle:
-                                          TextStyle(color: Colors.purple),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.purple),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.purple),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: authC.passC,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                        labelText: "Password",
+                                        labelStyle:
+                                            TextStyle(color: Colors.purple),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.purple),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.purple),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        if (authC.isRegis)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.date_range,
-                                  color: Colors.purple,
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    controller: birthDateC,
-                                    style: TextStyle(color: Colors.grey),
-                                    decoration: InputDecoration(
-                                      labelText: "Birth Date",
-                                      labelStyle:
-                                          TextStyle(color: Colors.purple),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.purple),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.purple),
+                            if (authC.isRegis)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.lock,
+                                      color: Colors.purple,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: authC.passC2,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          labelText: "Confirm Password",
+                                          labelStyle:
+                                              TextStyle(color: Colors.purple),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purple),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purple),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    onTap: () async {
-                                      birthDateC.clear();
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1900),
-                                        lastDate: DateTime.now(),
-                                      );
-                                      if (pickedDate != null) {
-                                        String formattedDate =
-                                            DateFormat('EEE, d MMM yyyy')
-                                                .format(pickedDate);
-                                        birthDateC.text = formattedDate;
-                                      }
-                                    },
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        if (authC.isRegis)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.person_outline,
-                                  color: Colors.purple,
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Gender",
-                                        style: TextStyle(color: Colors.purple),
+                              ),
+                            if (authC.isRegis)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.date_range,
+                                      color: Colors.purple,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: TextFormField(
+                                        readOnly: true,
+                                        controller: authC.birthDateC,
+                                        style: TextStyle(color: Colors.grey),
+                                        decoration: InputDecoration(
+                                          labelText: "Birth Date",
+                                          labelStyle:
+                                              TextStyle(color: Colors.purple),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purple),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.purple),
+                                          ),
+                                        ),
+                                        onTap: () async {
+                                          birthDateC.clear();
+                                          DateTime? pickedDate =
+                                              await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(1900),
+                                            lastDate: DateTime.now(),
+                                          );
+                                          if (pickedDate != null) {
+                                            String formattedDate =
+                                                DateFormat('EEE, d MMM yyyy')
+                                                    .format(pickedDate);
+                                            birthDateC.text = formattedDate;
+                                          }
+                                        },
                                       ),
-                                      Row(
-                                        children: [
-                                          Obx(() => Radio<String>(
-                                                value: 'Male',
-                                                groupValue: genderValue.value,
-                                                onChanged: (String? value) {
-                                                  genderValue.value =
-                                                      value ?? '';
-                                                },
-                                              )),
-                                          Text('Male'),
-                                          Obx(() => Radio<String>(
-                                                value: 'Female',
-                                                groupValue: genderValue.value,
-                                                onChanged: (String? value) {
-                                                  genderValue.value =
-                                                      value ?? '';
-                                                },
-                                              )),
-                                          Text('Female'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            if (authC.isRegis)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.person_outline,
+                                      color: Colors.purple,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "Gender",
+                                            style:
+                                                TextStyle(color: Colors.purple),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Obx(() => Radio<String>(
+                                                    value: 'Male',
+                                                    groupValue:
+                                                        genderValue.value,
+                                                    onChanged: (String? value) {
+                                                      genderValue.value =
+                                                          value ?? '';
+                                                    },
+                                                  )),
+                                              Text('Male'),
+                                              Obx(() => Radio<String>(
+                                                    value: 'Female',
+                                                    groupValue:
+                                                        genderValue.value,
+                                                    onChanged: (String? value) {
+                                                      genderValue.value =
+                                                          value ?? '';
+                                                    },
+                                                  )),
+                                              Text('Female'),
+                                            ],
+                                          ),
                                         ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => authC.login(emailC.text, passC.text),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  onPrimary: Colors.white,
-                  minimumSize: Size(350, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
-                child: Text('Sign In'),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Doesn't Have an Account? ",
-                    style: TextStyle(color: Colors.purple),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      authC.isRegis = !authC.isRegis;
-                    },
-                    child: Text(
-                      'Register Here',
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontStyle: FontStyle.italic,
-                        decoration: TextDecoration.none,
+                              ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Obx(
+                () => ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      if (authC.isRegis) {
+                        authC.signup();
+                      } else {
+                        authC.login();
+                      }
+                    }
+                    ;
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.purple,
+                    onPrimary: Colors.white,
+                    minimumSize: Size(350, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  child: Text(authC.isRegis ? 'Sign Up' : 'Sign In'),
+                ),
+              ),
+              SizedBox(height: 20),
+              Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      authC.isRegis
+                          ? "Have an Account? "
+                          : "Doesn't Have an Account? ",
+                      style: TextStyle(color: Colors.purple),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        authC.isRegis = !authC.isRegis;
+                      },
+                      child: Text(
+                        authC.isRegis ? 'Login Here' : 'Register Here',
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontStyle: FontStyle.italic,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 7),
               GestureDetector(
