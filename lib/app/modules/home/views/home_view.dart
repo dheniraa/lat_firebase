@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lat_firebase/app/controllers/auth_controller.dart';
 import 'package:lat_firebase/app/modules/form/views/form_view.dart';
+import 'package:lat_firebase/app/modules/login/controllers/login_controller.dart';
 
 import '../../profile/views/profile_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
-  final authC = Get.find<AuthController>();
+  final authC = Get.find<LoginController>();
+  final loginController = LoginController();
 
   final TextEditingController emailC = TextEditingController();
 
@@ -168,13 +170,15 @@ class HomeView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFFBF2C98), Color(0xFF8332A6)],
+            Positioned(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFFBF2C98), Color(0xFF8332A6)],
+                  ),
                 ),
               ),
             ),
@@ -204,22 +208,25 @@ class HomeView extends StatelessWidget {
               left: 85,
               child: Text(
                 'Hai...',
-                style: TextStyle(color: Colors.white, fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ),
             Positioned(
-              top: 77,
+              top: 76,
               left: 85,
               child: Text(
-                'Username',
-                style: TextStyle(color: Colors.white, fontSize: 15),
+                '${authC.user.username}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
               ),
             ),
             Positioned(
               top: 62,
               right: 20,
               child: Icon(
-                Icons.notifications,
+                Icons.notifications_none_outlined,
                 color: Colors.white,
                 size: 30,
               ),
@@ -228,7 +235,7 @@ class HomeView extends StatelessWidget {
               top: 53,
               right: 44,
               child: IconButton(
-                onPressed: () => authC.logout(),
+                onPressed: () => loginController.logout(),
                 icon: Icon(
                   Icons.logout,
                   color: Colors.white,

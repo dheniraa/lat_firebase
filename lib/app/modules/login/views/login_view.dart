@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lat_firebase/app/controllers/auth_controller.dart';
-import 'package:lat_firebase/app/routes/app_pages.dart';
+// import 'package:lat_firebase/app/controllers/auth_controller.dart';
+// import 'package:lat_firebase/app/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   final emailC = TextEditingController();
   final passC = TextEditingController();
-  final authC = Get.find<AuthController>();
+  final authC = Get.find<LoginController>();
   final birthDateC = TextEditingController();
   RxString genderValue = ''.obs;
 
@@ -46,7 +46,7 @@ class LoginView extends GetView<LoginController> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (authC.isRegis)
+                            if (controller.isRegis)
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5.0),
@@ -59,7 +59,7 @@ class LoginView extends GetView<LoginController> {
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: TextFormField(
-                                        controller: authC.nameC,
+                                        controller: controller.nameC,
                                         decoration: InputDecoration(
                                           labelText: "Name",
                                           labelStyle:
@@ -73,6 +73,12 @@ class LoginView extends GetView<LoginController> {
                                                 color: Colors.purple),
                                           ),
                                         ),
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Harap isi nama Anda';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                     ),
                                   ],
@@ -90,7 +96,8 @@ class LoginView extends GetView<LoginController> {
                                   SizedBox(width: 10),
                                   Expanded(
                                     child: TextFormField(
-                                      controller: authC.emailC,
+                                      controller: controller.emailC,
+                                      keyboardType: TextInputType.emailAddress,
                                       decoration: InputDecoration(
                                         labelText: "Email",
                                         labelStyle:
@@ -104,6 +111,12 @@ class LoginView extends GetView<LoginController> {
                                               BorderSide(color: Colors.purple),
                                         ),
                                       ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Harap isi email Anda';
+                                        }
+                                        return null;
+                                      },
                                     ),
                                   ),
                                 ],
@@ -121,7 +134,7 @@ class LoginView extends GetView<LoginController> {
                                   SizedBox(width: 10),
                                   Expanded(
                                     child: TextFormField(
-                                      controller: authC.passC,
+                                      controller: controller.passC,
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         labelText: "Password",
@@ -136,12 +149,18 @@ class LoginView extends GetView<LoginController> {
                                               BorderSide(color: Colors.purple),
                                         ),
                                       ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Harap isi password Anda';
+                                        }
+                                        return null;
+                                      },
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            if (authC.isRegis)
+                            if (controller.isRegis)
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5.0),
@@ -154,7 +173,7 @@ class LoginView extends GetView<LoginController> {
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: TextFormField(
-                                        controller: authC.passC2,
+                                        controller: controller.passC2,
                                         obscureText: true,
                                         decoration: InputDecoration(
                                           labelText: "Confirm Password",
@@ -169,12 +188,18 @@ class LoginView extends GetView<LoginController> {
                                                 color: Colors.purple),
                                           ),
                                         ),
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Harap konfirmasi password Anda';
+                                          }
+                                          return null;
+                                        },
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            if (authC.isRegis)
+                            if (controller.isRegis)
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5.0),
@@ -188,7 +213,7 @@ class LoginView extends GetView<LoginController> {
                                     Expanded(
                                       child: TextFormField(
                                         readOnly: true,
-                                        controller: authC.birthDateC,
+                                        controller: controller.birthDateC,
                                         style: TextStyle(color: Colors.grey),
                                         decoration: InputDecoration(
                                           labelText: "Birth Date",
@@ -204,7 +229,7 @@ class LoginView extends GetView<LoginController> {
                                           ),
                                         ),
                                         onTap: () async {
-                                          birthDateC.clear();
+                                          controller.birthDateC.clear();
                                           DateTime? pickedDate =
                                               await showDatePicker(
                                             context: context,
@@ -216,7 +241,8 @@ class LoginView extends GetView<LoginController> {
                                             String formattedDate =
                                                 DateFormat('EEE, d MMM yyyy')
                                                     .format(pickedDate);
-                                            birthDateC.text = formattedDate;
+                                            controller.birthDateC.text =
+                                                formattedDate;
                                           }
                                         },
                                       ),
@@ -224,7 +250,7 @@ class LoginView extends GetView<LoginController> {
                                   ],
                                 ),
                               ),
-                            if (authC.isRegis)
+                            if (controller.isRegis)
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5.0),
@@ -287,10 +313,10 @@ class LoginView extends GetView<LoginController> {
                 () => ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      if (authC.isRegis) {
-                        authC.signup();
+                      if (controller.isRegis) {
+                        controller.register();
                       } else {
-                        authC.login();
+                        controller.login();
                       }
                     }
                     ;
@@ -303,7 +329,7 @@ class LoginView extends GetView<LoginController> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  child: Text(authC.isRegis ? 'Sign Up' : 'Sign In'),
+                  child: Text(controller.isRegis ? 'Sign Up' : 'Sign In'),
                 ),
               ),
               SizedBox(height: 20),
@@ -312,17 +338,17 @@ class LoginView extends GetView<LoginController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      authC.isRegis
+                      controller.isRegis
                           ? "Have an Account? "
                           : "Doesn't Have an Account? ",
                       style: TextStyle(color: Colors.purple),
                     ),
                     GestureDetector(
                       onTap: () {
-                        authC.isRegis = !authC.isRegis;
+                        controller.isRegis = !controller.isRegis;
                       },
                       child: Text(
-                        authC.isRegis ? 'Login Here' : 'Register Here',
+                        controller.isRegis ? 'Login Here' : 'Register Here',
                         style: TextStyle(
                           color: Colors.purple,
                           fontStyle: FontStyle.italic,
@@ -345,7 +371,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
-              SizedBox(height: 50), // Adding additional space at the bottom
+              SizedBox(height: 50),
             ],
           ),
         ),

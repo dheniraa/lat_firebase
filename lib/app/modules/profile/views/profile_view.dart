@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lat_firebase/app/modules/home/views/home_view.dart';
+import '../../login/controllers/login_controller.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  ProfileView({Key? key}) : super(key: key);
+
+  final authC = Get.find<LoginController>();
 
   void _onEditPressed() {
-    // Add navigation logic here
-    // For example:
+    // Tambahkan logika navigasi di sini
+    // Contoh:
     // Get.to(YourEditPage());
   }
 
   void _onItemTapped(int index) {
-    // TODO: Implement your logic here
+    // TODO: Implementasikan logika Anda di sini
     if (index == 0) {
       Get.to(() => HomeView());
     }
@@ -25,136 +29,233 @@ class ProfileView extends GetView<ProfileController> {
       backgroundColor: const Color(0xFFFBF2FF),
       body: Stack(
         children: [
-          Container(
-            height: 290,
-            width: MediaQuery.of(context).size.width,
+          Align(
+            alignment: Alignment.topCenter,
             child: Image.asset(
               'images/profile-background.png',
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
+              height: 290,
             ),
           ),
-          Positioned(
-            top: 60,
-            left: 30,
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: Image.asset(
-                'images/profile.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 85,
-            left: 123,
-            child: Text(
-              'Full Name',
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
-          ),
-          Positioned(
-            top: 105,
-            left: 123,
-            child: Text(
-              'name@gmail.com',
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ),
-          ),
-          Positioned(
-            top: 80,
-            right: 40,
-            child: GestureDetector(
-              onTap: _onEditPressed,
-              child: Stack(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 20,
-                    child: Icon(Icons.edit, color: Colors.white, size: 22),
-                  ),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 1.5),
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 60),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 35,
+                      backgroundImage: AssetImage('images/profile.png'),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 9),
+                        ),
+                        Text(
+                          "${authC.user.username}".toUpperCase(),
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Text(
+                          "${authC.user.email}",
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 70),
+                    Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: InkWell(
+                        onTap: _onEditPressed,
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.white, width: 1.2),
+                          ),
+                          child: Center(
+                            child:
+                                Icon(Icons.edit, color: Colors.white, size: 22),
+                          ),
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 15, right: 15, top: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 120,
+                      height: 68,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Total Book',
+                            style: TextStyle(fontSize: 13, color: Colors.black),
+                          ),
+                          SizedBox(height: 3),
+                          Text(
+                            '7',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      width: 120,
+                      height: 68,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Total Progress',
+                            style: TextStyle(fontSize: 13, color: Colors.black),
+                          ),
+                          SizedBox(height: 3),
+                          Text(
+                            '77%',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 80),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.email,
+                              color: Color(0xff8332A6),
+                              size: 25,
+                            ),
+                            SizedBox(width: 17),
+                            Text(
+                              '${authC.user.email}',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
+                  SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.cake,
+                              color: Color(0xff8332A6),
+                              size: 25,
+                            ),
+                            SizedBox(width: 17),
+                            Text(
+                              authC.user.birthDate is DateTime
+                                  ? DateFormat('EEE, d MMM yyyy')
+                                      .format(authC.user.birthDate!)
+                                  : '',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 35),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 20),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Icon(
+                  //             authC.user.gender == 'female'
+                  //                 ? Icons.male
+                  //                 : Icons.female,
+                  //             color: Color(0xff8332A6),
+                  //             size: 25,
+                  //           ),
+                  //           SizedBox(width: 17),
+                  //           Text(
+                  //             authC.user.gender == 'female' ? 'Male' : 'Female',
+                  //             style: TextStyle(fontSize: 17),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
-            ),
-          ),
-          Positioned(
-            top: 170,
-            left: 35,
-            child: Container(
-              width: 120,
-              height: 68,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Total Book',
-                      style: TextStyle(color: Colors.black, fontSize: 15),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      '7',
-                      style: TextStyle(color: Colors.black, fontSize: 32),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 170,
-            right: 35,
-            child: Container(
-              width: 120,
-              height: 68,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Total Progress',
-                      style: TextStyle(color: Colors.black, fontSize: 14),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      '77%',
-                      style: TextStyle(color: Colors.black, fontSize: 32),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            ],
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(), // Menambahkan shape
+        shape: CircularNotchedRectangle(),
         child: CustomPaint(
           size: Size(MediaQuery.of(context).size.width, 50),
           painter: BNBCustomPainter(),
@@ -171,8 +272,7 @@ class ProfileView extends GetView<ProfileController> {
                 IconButton(
                   icon: Icon(Icons.person, size: 30),
                   color: Colors.purple,
-                  onPressed: () =>
-                      _onItemTapped(1), // Mengganti dengan _onItemTapped
+                  onPressed: () => _onItemTapped(1),
                 ),
               ],
             ),

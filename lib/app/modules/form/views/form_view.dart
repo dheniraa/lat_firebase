@@ -13,11 +13,19 @@ class FormView extends GetView<FormController> {
         titleTextStyle: const TextStyle(color: Colors.purple, fontSize: 18),
         centerTitle: true,
         backgroundColor: const Color(0xFFFBF2FF),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
+          color: Colors.purple,
+        ),
       ),
       backgroundColor: const Color(0xFFFBF2FF),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Card(
               elevation: 10,
@@ -36,7 +44,7 @@ class FormView extends GetView<FormController> {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.person,
+                            Icons.book,
                             color: Colors.purple,
                           ),
                           const SizedBox(width: 10),
@@ -136,40 +144,24 @@ class FormView extends GetView<FormController> {
                       'images/upload-image.png',
                       fit: BoxFit.cover,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          // await controller.selectImage();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.purple,
-                          padding: EdgeInsets.symmetric(horizontal: 30),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(
-                              color: Colors.purple,
-                              width: 1,
-                            ),
+                    const SizedBox(height: 18),
+                    ElevatedButton(
+                      onPressed: () async {
+                        // await controller.selectImage();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.purple,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(
+                            color: Colors.purple,
+                            width: 1,
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.cloud_upload_outlined,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              'Upload',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                        minimumSize: Size(100, 40),
                       ),
+                      child: Text('Upload'),
                     ),
                   ],
                 ),
@@ -183,12 +175,12 @@ class FormView extends GetView<FormController> {
         style: ElevatedButton.styleFrom(
           primary: Colors.purple,
           onPrimary: Colors.white,
-          minimumSize: Size(350, 40),
+          minimumSize: Size(380, 40),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
         ),
-        child: Text('Submit'),
+        child: const Text('Submit'),
       ),
     );
   }

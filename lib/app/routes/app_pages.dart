@@ -29,12 +29,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
       name: _Paths.FORM,
-      page: () => const FormView(),
+      page: () => FormView(),
       binding: FormBinding(),
     ),
   ];

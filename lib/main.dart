@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lat_firebase/app/controllers/auth_controller.dart';
 import 'package:lat_firebase/app/modules/home/views/home_view.dart';
+import 'package:lat_firebase/app/modules/login/controllers/login_controller.dart';
 import 'package:lat_firebase/app/modules/login/views/login_view.dart';
 import 'package:lat_firebase/app/utils/loading.dart';
 
@@ -15,6 +16,7 @@ void main() async {
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: 'AIzaSyA7stfTCULSQ2Hy7q1tKDEI4fvuwkW5Uvg',
+          storageBucket: 'dhe-firebase.appspot.com',
           // authDomain: "dhe-firebase.firebaseapp.com",
           appId: '1:864031344005:android:56e680ac189785a9a1b0ec',
           messagingSenderId: '864031344005',
@@ -24,7 +26,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final authC = Get.put(AuthController(), permanent: true);
+  final authC = Get.put(LoginController(), permanent: true);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
